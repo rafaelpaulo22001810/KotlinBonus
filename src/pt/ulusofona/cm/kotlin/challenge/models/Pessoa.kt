@@ -34,6 +34,7 @@ class Pessoa(
 
     fun venderVeiculo(identificador: String, comprador: Pessoa) {
         val veiculo = pesquisarVeiculo(identificador)
+        veiculos.remove(veiculo)
         veiculo.dataDeAquisicao = Date()
         comprador.comprarVeiculo(veiculo)
     }
@@ -44,11 +45,9 @@ class Pessoa(
                 if ((veiculo.requerCarta() && temCarta())){
                     val index = veiculos.indexOf(veiculo)
                     veiculos[index].moverPara(x,y)
-                    return
                 }else if(!veiculo.requerCarta()){
                     val index = veiculos.indexOf(veiculo)
                     veiculos[index].moverPara(x,y)
-                    return
                 }else if ((veiculo.requerCarta() && !temCarta())){
                     throw PessoaSemCartaException(nome)
                 } else{

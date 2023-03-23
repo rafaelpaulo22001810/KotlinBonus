@@ -1,5 +1,6 @@
 package pt.ulusofona.cm.kotlin.challenge.models
 
+import pt.ulusofona.cm.kotlin.challenge.exceptions.AlterarPosicaoException
 import pt.ulusofona.cm.kotlin.challenge.exceptions.MenorDeIdadeException
 import pt.ulusofona.cm.kotlin.challenge.exceptions.PessoaSemCartaException
 import pt.ulusofona.cm.kotlin.challenge.exceptions.VeiculoNaoEncontradoException
@@ -39,10 +40,13 @@ class Pessoa(
         if (carta ==  null){
             throw PessoaSemCartaException("${nome} não tem carta para conduzir o veículo indicado")
         }
+
         for (veiculo in veiculos) {
             if (veiculo.identificador.equals(identificador)) {
-                val index = veiculos.indexOf(veiculo)
-                veiculos.get(index).moverPara(x,y)
+                if ((veiculo.requerCarta() && temCarta()) || !veiculo.requerCarta()){
+                    val index = veiculos.indexOf(veiculo)
+                    veiculos.get(index).moverPara(x,y)
+                }
             }
         }
     }
@@ -67,8 +71,10 @@ class Pessoa(
     }
 
     override fun moverPara(x: Int, y: Int) {
-        posicao.x = x
-        posicao.y = y
+        if (posicao.x == x && posicao.y == y){
+            throw AlterarPosicaoException()
+        }
+        posicao = Posicao(x, y)
     }
 
     override fun toString(): String {

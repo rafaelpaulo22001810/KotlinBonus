@@ -1,22 +1,22 @@
 package pt.ulusofona.cm.kotlin.challenge.models
 
 import pt.ulusofona.cm.kotlin.challenge.interfaces.Ligavel
-import pt.ulusofona.cm.kotlin.challenge.interfaces.Movimentavel
 
-class Carro(var identificador: String, var motor: Motor):Ligavel, Movimentavel {
+class Carro(identificador: String, var motor: Motor): Veiculo(identificador), Ligavel{
     override fun ligar() {
-        TODO("Not yet implemented")
+        motor.ligar()
     }
 
     override fun desligar() {
-        TODO("Not yet implemented")
+        motor.desligar()
     }
 
     override fun estaLigado(): Boolean {
-        TODO("Not yet implemented")
+        return motor.estaLigado()
     }
 
-    override fun moverPara(x: Int, y: Int) {
-        TODO("Not yet implemented")
+    override fun requerCarta(): Boolean {
+        return true
     }
+
 }

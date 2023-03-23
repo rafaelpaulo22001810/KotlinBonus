@@ -1,18 +1,27 @@
 package pt.ulusofona.cm.kotlin.challenge.models
 
+import pt.ulusofona.cm.kotlin.challenge.exceptions.VeiculoDesligadoException
+import pt.ulusofona.cm.kotlin.challenge.exceptions.VeiculoLigadoException
 import pt.ulusofona.cm.kotlin.challenge.interfaces.Ligavel
 
 class Motor(var cavalos: Int, var cilindrada: Int):Ligavel {
+    var ligado: Boolean = false
     override fun ligar() {
-        TODO("Not yet implemented")
+        if (ligado){
+            throw VeiculoLigadoException()
+        }
+        ligado = true
     }
 
     override fun desligar() {
-        TODO("Not yet implemented")
+        if (!ligado){
+            throw VeiculoDesligadoException()
+        }
+        ligado = false
     }
 
     override fun estaLigado(): Boolean {
-        TODO("Not yet implemented")
+        return ligado
     }
 
 }

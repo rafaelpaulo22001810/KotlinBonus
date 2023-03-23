@@ -2,6 +2,7 @@ package pt.ulusofona.cm.kotlin.challenge.models
 
 import pt.ulusofona.cm.kotlin.challenge.exceptions.MenorDeIdadeException
 import pt.ulusofona.cm.kotlin.challenge.exceptions.PessoaSemCartaException
+import pt.ulusofona.cm.kotlin.challenge.exceptions.VeiculoNaoEncontradoException
 import pt.ulusofona.cm.kotlin.challenge.interfaces.Movimentavel
 import java.time.LocalDateTime
 import java.time.Period
@@ -26,7 +27,7 @@ class Pessoa(
                 return veiculos.get(index)
             }
         }
-        return null
+        throw VeiculoNaoEncontradoException()
     }
 
     fun venderVeiculo(identificador: String, comprador: Pessoa) {

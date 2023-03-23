@@ -22,9 +22,9 @@ class Pessoa(
 
     fun pesquisarVeiculo(identificador: String): Veiculo {
         for (veiculo in veiculos) {
-            if (veiculo.identificador.equals(identificador)) {
+            if (veiculo.identificador == identificador) {
                 val index = veiculos.indexOf(veiculo)
-                return veiculos.get(index)
+                return veiculos[index]
             }
         }
         throw VeiculoNaoEncontradoException()
@@ -38,14 +38,17 @@ class Pessoa(
 
     fun moverVeiculoPara(identificador: String, x: Int, y: Int) {
         if (carta ==  null){
-            throw PessoaSemCartaException("${nome} não tem carta para conduzir o veículo indicado")
+            throw PessoaSemCartaException("$nome não tem carta para conduzir o veículo indicado")
         }
 
         for (veiculo in veiculos) {
             if (veiculo.identificador.equals(identificador)) {
-                if ((veiculo.requerCarta() && temCarta()) || !veiculo.requerCarta()){
+                if ((veiculo.requerCarta() && temCarta())){
                     val index = veiculos.indexOf(veiculo)
-                    veiculos.get(index).moverPara(x,y)
+                    veiculos[index].moverPara(x,y)
+                }else if(!veiculo.requerCarta()){
+                    val index = veiculos.indexOf(veiculo)
+                    veiculos[index].moverPara(x,y)
                 }else{
                     throw AlterarPosicaoException()
                 }
@@ -68,8 +71,9 @@ class Pessoa(
 
         if (atual.after(dataDeNascimento)){
             carta = Carta()
+        }else{
+            throw MenorDeIdadeException()
         }
-        throw MenorDeIdadeException()
     }
 
     override fun moverPara(x: Int, y: Int) {
@@ -80,6 +84,6 @@ class Pessoa(
     }
 
     override fun toString(): String {
-        return "Pessoa | $nome | $dataDeNascimento | Posicao | x:${posicao.x} | y:${posicao.y}"
+        return "Pessoa | $nome | $dataDeNascimento. | Posicao | x:${posicao.x} | y:${posicao.y}"
     }
 }

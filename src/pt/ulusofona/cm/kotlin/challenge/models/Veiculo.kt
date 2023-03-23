@@ -12,11 +12,5 @@ abstract class Veiculo(
 
     abstract fun requerCarta(): Boolean
 
-    override fun moverPara(x: Int, y: Int) {
-        if (posicao.x == x && posicao.y == y){
-            throw AlterarPosicaoException()
-        }
-        posicao = Posicao(x, y)
-        return
-    }
+    abstract override fun moverPara(x: Int, y: Int)
 }

@@ -46,15 +46,9 @@ class Pessoa(
             if (veiculo.identificador.equals(identificador)) {
                 if ((veiculo.requerCarta() && temCarta())){
                     veiculo.moverPara(x,y)
-                    if (veiculo is Ligavel){
-                        veiculo.desligar()
-                    }
                     return
                 }else if(!veiculo.requerCarta()){
                     veiculo.moverPara(x,y)
-                    if (veiculo is Ligavel){
-                        veiculo.desligar()
-                    }
                     return
                 }else if ((veiculo.requerCarta() && !temCarta())){
                     throw PessoaSemCartaException(nome)

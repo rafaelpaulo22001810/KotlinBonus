@@ -4,6 +4,7 @@ import pt.ulusofona.cm.kotlin.challenge.exceptions.AlterarPosicaoException
 import pt.ulusofona.cm.kotlin.challenge.exceptions.MenorDeIdadeException
 import pt.ulusofona.cm.kotlin.challenge.exceptions.PessoaSemCartaException
 import pt.ulusofona.cm.kotlin.challenge.exceptions.VeiculoNaoEncontradoException
+import pt.ulusofona.cm.kotlin.challenge.interfaces.Ligavel
 import pt.ulusofona.cm.kotlin.challenge.interfaces.Movimentavel
 import java.time.*
 import java.time.format.DateTimeFormatter
@@ -44,12 +45,16 @@ class Pessoa(
         for (veiculo in veiculos) {
             if (veiculo.identificador.equals(identificador)) {
                 if ((veiculo.requerCarta() && temCarta())){
-                    val index = veiculos.indexOf(veiculo)
-                    veiculos[index].moverPara(x,y)
+                    veiculo.moverPara(x,y)
+                    if (veiculo is Ligavel){
+                        veiculo.desligar()
+                    }
                     return
                 }else if(!veiculo.requerCarta()){
-                    val index = veiculos.indexOf(veiculo)
-                    veiculos[index].moverPara(x,y)
+                    veiculo.moverPara(x,y)
+                    if (veiculo is Ligavel){
+                        veiculo.desligar()
+                    }
                     return
                 }else if ((veiculo.requerCarta() && !temCarta())){
                     throw PessoaSemCartaException(nome)

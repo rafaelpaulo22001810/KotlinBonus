@@ -4,12 +4,11 @@ import pt.ulusofona.cm.kotlin.challenge.exceptions.MenorDeIdadeException
 import pt.ulusofona.cm.kotlin.challenge.exceptions.PessoaSemCartaException
 import pt.ulusofona.cm.kotlin.challenge.exceptions.VeiculoNaoEncontradoException
 import pt.ulusofona.cm.kotlin.challenge.interfaces.Movimentavel
-import java.time.LocalDateTime
-import java.time.Period
+import java.util.*
 
 class Pessoa(
     var nome: String,
-    var dataDeNascimento: LocalDateTime,
+    var dataDeNascimento: Date,
     var posicao: Posicao = Posicao(),
     var carta: Carta? = null,
     var veiculos: MutableList<Veiculo> = mutableListOf()
@@ -20,7 +19,7 @@ class Pessoa(
         veiculos.add(veiculo)
     }
 
-    fun pesquisarVeiculo(identificador: String): Veiculo? {
+    fun pesquisarVeiculo(identificador: String): Veiculo {
         for (veiculo in veiculos) {
             if (veiculo.identificador.equals(identificador)) {
                 val index = veiculos.indexOf(veiculo)
@@ -32,13 +31,11 @@ class Pessoa(
 
     fun venderVeiculo(identificador: String, comprador: Pessoa) {
         val veiculo = pesquisarVeiculo(identificador)
-        if (veiculo != null) {
-            veiculo.dataDeAquisicao = LocalDateTime.now()
-            comprador.comprarVeiculo(veiculo)
-        }
+        veiculo.dataDeAquisicao = Date()
+        comprador.comprarVeiculo(veiculo)
     }
 
-    fun moverVeiculo(identificador: String, x: Int, y: Int) {
+    fun moverVeiculoPara(identificador: String, x: Int, y: Int) {
         if (carta ==  null){
             throw PessoaSemCartaException("${nome} não tem carta para conduzir o veículo indicado")
         }
@@ -58,14 +55,23 @@ class Pessoa(
     }
 
     fun tirarCarta() {
-        if (Period.between(dataDeNascimento.toLocalDate(), LocalDateTime.now().toLocalDate()).years < 18){
-            throw MenorDeIdadeException()
+        val atual = Calendar.getInstance()
+        val nascimento = Calendar.getInstance()
+        nascimento.time = dataDeNascimento
+        nascimento.add(Calendar.YEAR, 18)
+
+        if (atual.after(dataDeNascimento)){
+            carta = Carta()
         }
-        carta = Carta()
+        throw MenorDeIdadeException()
     }
 
     override fun moverPara(x: Int, y: Int) {
         posicao.x = x
         posicao.y = y
+    }
+
+    override fun toString(): String {
+        return "Pessoa | $nome | $dataDeNascimento | Posicao | x:${posicao.x} | y:${posicao.y}"
     }
 }

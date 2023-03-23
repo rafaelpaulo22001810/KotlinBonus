@@ -44,9 +44,11 @@ class Pessoa(
                 if ((veiculo.requerCarta() && temCarta())){
                     val index = veiculos.indexOf(veiculo)
                     veiculos[index].moverPara(x,y)
+                    return
                 }else if(!veiculo.requerCarta()){
                     val index = veiculos.indexOf(veiculo)
                     veiculos[index].moverPara(x,y)
+                    return
                 }else if ((veiculo.requerCarta() && !temCarta())){
                     throw PessoaSemCartaException(nome)
                 } else{
@@ -80,6 +82,7 @@ class Pessoa(
             throw AlterarPosicaoException()
         }
         posicao = Posicao(x, y)
+        return
     }
 
     override fun toString(): String {

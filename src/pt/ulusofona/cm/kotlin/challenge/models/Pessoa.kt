@@ -5,6 +5,8 @@ import pt.ulusofona.cm.kotlin.challenge.exceptions.MenorDeIdadeException
 import pt.ulusofona.cm.kotlin.challenge.exceptions.PessoaSemCartaException
 import pt.ulusofona.cm.kotlin.challenge.exceptions.VeiculoNaoEncontradoException
 import pt.ulusofona.cm.kotlin.challenge.interfaces.Movimentavel
+import java.time.*
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class Pessoa(
@@ -64,16 +66,14 @@ class Pessoa(
     }
 
     fun tirarCarta() {
-        val atual = Calendar.getInstance()
-        val nascimento = Calendar.getInstance()
-        nascimento.time = dataDeNascimento
-        nascimento.add(Calendar.YEAR, 18)
+        val atual = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
+        val nascimento = LocalDate.ofInstant(dataDeNascimento.toInstant(), ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
+        val idade = Period.between(LocalDate.parse(nascimento, DateTimeFormatter.ofPattern("dd-MM-yyyy")), LocalDate.parse(atual, DateTimeFormatter.ofPattern("dd-MM-yyyy"))).years
 
-        if (atual.after(dataDeNascimento)){
-            carta = Carta()
-        }else{
+        if (idade < 18){
             throw MenorDeIdadeException()
         }
+        carta = Carta()
     }
 
     override fun moverPara(x: Int, y: Int) {
@@ -84,6 +84,7 @@ class Pessoa(
     }
 
     override fun toString(): String {
-        return "Pessoa | $nome | $dataDeNascimento. | Posicao | x:${posicao.x} | y:${posicao.y}"
+        val nascimento = LocalDate.ofInstant(dataDeNascimento.toInstant(), ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
+        return "Pessoa | $nome | $nascimento. | Posicao | x:${posicao.x} | y:${posicao.y}"
     }
 }

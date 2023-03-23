@@ -80,10 +80,7 @@ class Pessoa(
     }
 
     override fun moverPara(x: Int, y: Int) {
-        if (posicao.x == x && posicao.y == y){
-            throw AlterarPosicaoException()
-        }
-        posicao = Posicao(x, y)
+        posicao.alterarPosicaoPara(x, y)
         return
     }
 

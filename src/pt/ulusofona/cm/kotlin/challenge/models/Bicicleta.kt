@@ -10,6 +10,10 @@ class Bicicleta(identificador: String): Veiculo(identificador), Movimentavel {
         return false
     }
 
+    override fun moverPara(x: Int, y: Int) {
+        posicao.alterarPosicaoPara(x, y)
+    }
+
     override fun toString(): String {
         val aquisicao = LocalDate.ofInstant(dataDeAquisicao.toInstant(), ZoneId.systemDefault()).format(
             DateTimeFormatter.ofPattern("dd-MM-yyyy"))

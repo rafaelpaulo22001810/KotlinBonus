@@ -28,7 +28,7 @@ class Carro(identificador: String, var motor: Motor): Veiculo(identificador), Li
             if (posicao.x == x && posicao.y == y){
                 throw AlterarPosicaoException()
             }
-            posicao = Posicao(x, y)
+            posicao.alterarPosicaoPara(x, y)
             desligar()
         }
         return

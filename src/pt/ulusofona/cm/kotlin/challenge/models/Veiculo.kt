@@ -18,5 +18,6 @@ abstract class Veiculo(
             throw AlterarPosicaoException()
         }
         posicao = Posicao(x, y)
+        return
     }
 }

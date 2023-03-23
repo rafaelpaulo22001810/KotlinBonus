@@ -73,6 +73,7 @@ class Pessoa(
         if (idade < 18){
             throw MenorDeIdadeException()
         }
+
         carta = Carta()
     }
 

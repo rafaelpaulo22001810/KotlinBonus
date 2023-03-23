@@ -47,7 +47,9 @@ class Pessoa(
                 }else if(!veiculo.requerCarta()){
                     val index = veiculos.indexOf(veiculo)
                     veiculos[index].moverPara(x,y)
-                }else{
+                }else if ((veiculo.requerCarta() && !temCarta())){
+                    throw PessoaSemCartaException(nome)
+                } else{
                     throw AlterarPosicaoException()
                 }
             }

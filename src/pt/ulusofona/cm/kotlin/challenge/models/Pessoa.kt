@@ -52,8 +52,6 @@ class Pessoa(
                     return
                 }else if ((veiculo.requerCarta() && !temCarta())){
                     throw PessoaSemCartaException(nome)
-                } else{
-                    throw AlterarPosicaoException()
                 }
             }
         }

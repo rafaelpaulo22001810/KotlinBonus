@@ -37,6 +37,7 @@ class Pessoa(
         veiculos.remove(veiculo)
         veiculo.dataDeAquisicao = Date()
         comprador.comprarVeiculo(veiculo)
+        return
     }
 
     fun moverVeiculoPara(identificador: String, x: Int, y: Int) {
@@ -45,9 +46,11 @@ class Pessoa(
                 if ((veiculo.requerCarta() && temCarta())){
                     val index = veiculos.indexOf(veiculo)
                     veiculos[index].moverPara(x,y)
+                    return
                 }else if(!veiculo.requerCarta()){
                     val index = veiculos.indexOf(veiculo)
                     veiculos[index].moverPara(x,y)
+                    return
                 }else if ((veiculo.requerCarta() && !temCarta())){
                     throw PessoaSemCartaException(nome)
                 } else{
@@ -74,6 +77,7 @@ class Pessoa(
         }
 
         carta = Carta()
+        return
     }
 
     override fun moverPara(x: Int, y: Int) {

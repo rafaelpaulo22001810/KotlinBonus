@@ -39,10 +39,6 @@ class Pessoa(
     }
 
     fun moverVeiculoPara(identificador: String, x: Int, y: Int) {
-        if (carta ==  null){
-            throw PessoaSemCartaException("$nome não tem carta para conduzir o veículo indicado")
-        }
-
         for (veiculo in veiculos) {
             if (veiculo.identificador.equals(identificador)) {
                 if ((veiculo.requerCarta() && temCarta())){
@@ -86,6 +82,6 @@ class Pessoa(
 
     override fun toString(): String {
         val nascimento = LocalDate.ofInstant(dataDeNascimento.toInstant(), ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
-        return "Pessoa | $nome | $nascimento. | Posicao | x:${posicao.x} | y:${posicao.y}"
+        return "Pessoa | $nome | $nascimento | Posicao | x:${posicao.x} | y:${posicao.y}"
     }
 }

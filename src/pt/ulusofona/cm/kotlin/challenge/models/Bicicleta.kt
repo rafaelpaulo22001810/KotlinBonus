@@ -1,6 +1,9 @@
 package pt.ulusofona.cm.kotlin.challenge.models
 
 import pt.ulusofona.cm.kotlin.challenge.interfaces.Movimentavel
+import java.time.LocalDate
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 class Bicicleta(identificador: String): Veiculo(identificador), Movimentavel {
     override fun requerCarta(): Boolean {
@@ -8,6 +11,8 @@ class Bicicleta(identificador: String): Veiculo(identificador), Movimentavel {
     }
 
     override fun toString(): String {
-        return "Bicicleta | ${identificador} | $dataDeAquisicao | Posicao | x:${posicao.x} | y:${posicao.y}"
+        val aquisicao = LocalDate.ofInstant(dataDeAquisicao.toInstant(), ZoneId.systemDefault()).format(
+            DateTimeFormatter.ofPattern("dd-MM-yyyy"))
+        return "Bicicleta | ${identificador} | $aquisicao | Posicao | x:${posicao.x} | y:${posicao.y}"
     }
 }
